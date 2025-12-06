@@ -32,6 +32,8 @@ This project requires Python 3.11+.
 uv sync
 ```
 
+
+
 ## Quick Start
 
 ### 1. Download Training Data
@@ -48,6 +50,14 @@ Analyze the dataset with statistics and sample outputs:
 
 ```bash
 uv run training_data/training_data_eda.py
+```
+
+For cuda installed Win setups, delete the default torch library and install a cuda enabled one.
+Check cuda version before installation, below command is meant to be an example and it's for cuda12.8. 
+
+```bash
+uv remove torch
+uv add torch --extra-index-url https://download.pytorch.org/whl/cu128 --index-strategy unsafe-best-match
 ```
 
 This shows:

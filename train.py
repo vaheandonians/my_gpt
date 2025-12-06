@@ -56,9 +56,9 @@ dataset_path = "training_data/fineweb_edu_sample/sample/10BT/000_00000.parquet"
 # However, GPU memory (VRAM) is limited (e.g., 24GB).
 # If we try to fit 500 documents, the GPU crashes (Out of Memory).
 # So, we pick a small number that fits physically in the hardware (e.g., 12).
-batch_size = 12                   
+batch_size = 12
 
-block_size = 1024 # The "Context Window". The model can see 1024 tokens back in time.
+block_size = 384 # The "Context Window". The model can see 1024 tokens back in time.
 
 # --- CONCEPT: GRADIENT ACCUMULATION ---
 # Problem: We established that `batch_size=12` is too small for stable learning.
@@ -297,7 +297,7 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate, betas=(beta1
 # C++ / CUDA kernel. It can make training 30% faster.
 if device_type == 'cuda':
     print("Compiling model... (This may take a minute)")
-    model = torch.compile(model)
+    model = torch.compile(model, backend="eager")
 elif device_type == 'mps':
     print("Running on MPS: Skipping torch.compile (not fully stable yet)")
 
